@@ -1,0 +1,55 @@
+$*************HEADING****************************************
+$
+PROJ 'sand' 's07'
+$
+$ Previous versions used one layer and included BREAK
+$ This version has multiple layers and changed discretization
+$
+$***********MODEL INPUT**********************************
+$
+MODE DYN ONED
+$
+COORD CARTESIAN
+CGRID REGULAR 0. 0. 0. 250. 0. 5000 0
+VERTICAL 15
+$
+INPGRID BOT 0. 0. 0. 2500 0 0.1 0.
+READINP BOT 1. 'sand.bot' 1 0 FREE
+$
+INIT zero
+SET {BOT-sand}
+
+BOU SHAPE JON 3.3 SIG PEAK DSPR DEGREES
+BOU SIDE W CCW BTYPE WEAK CON SPECTRUM 0.7 10. 90. 0. 2000. SEC
+BOU SIDE E CCW BTYPE RADIATION
+
+$
+FRIC MANNING 0.019
+$ BREAK
+
+$ This works for one layer, but not multiple
+$ NONHYDROSTATIC STAN
+$ NONHYD BOX PREC ILU
+$ NONHYD STAN 1. SOLVER 0.01 0 100 .55  PREC ILU
+
+
+DISCRET UPW UMOM H BDF
+DISCRET UPW WMOM H BDF
+$
+TIMEI METH EXPL 0.1 0.5
+$
+$************ OUTPUT REQUESTS *************************
+$
+$QUANT XP HEXP 10.
+QUANT HS SETUP DUR 2000 SEC
+$
+FRAME 'GRID'   0. 0. 0. 250. 0. 500 0
+BLOCK 'GRID'   NOHEAD 'ufric07.mat' LAY 3 UFRIC OUTPUT 000000.000 .1 SEC
+BLOCK 'GRID'   NOHEAD 'vksi07.mat' LAY 3 VKSI OUTPUT 000000.000 .1 SEC
+BLOCK 'GRID'   NOHEAD 'vksik07.mat' LAY 3 ZK HK VKSIK OUTPUT 000000.000 .1 SEC
+BLOCK 'GRID'   NOHEAD 'wl07.mat' LAY 3 WATL OUTPUT 000000.000 .1 SEC
+BLOCK 'GRID'   NOHEAD 'bot07.mat' LAY 3 XP BOTL OUTPUT 000000.000 .1 SEC
+BLOCK 'GRID'   NOHEAD 'setup07.mat' LAY 3 XP HS SETUP
+$
+COMPUTE 000000.000 0.001 SEC 002800.000
+STOP
