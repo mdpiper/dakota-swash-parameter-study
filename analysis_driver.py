@@ -60,6 +60,7 @@ if __name__ == '__main__':
     input_file = 'INPUT'
     output_file = 'bot07.mat'
     output_file_var = 'Botlev'
+    data_file = 'sand.bot'
     run_script = 'run_swash.sh'
 
     # Use the parsing utility `dprepro` (from $DAKOTA_DIR/bin) to
@@ -67,6 +68,9 @@ if __name__ == '__main__':
     # template, creating a new SWASH input file.
     shutil.copy(os.path.join(start_dir, input_template), os.curdir)
     call(['dprepro', sys.argv[1], input_template, input_file])
+
+    # Copy data file into active directory.
+    shutil.copy(os.path.join(start_dir, data_file), os.curdir)
 
     # Call SWASH with a script containing PBS commands.
     job_name = 'SWASH-Dakota' + os.path.splitext(os.getcwd())[1]

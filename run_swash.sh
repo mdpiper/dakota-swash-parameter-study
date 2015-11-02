@@ -18,5 +18,5 @@ echo "--> Number of available nodes " $NNODES
 echo "--> Launch command is " $CMD
 
 cd $PBS_O_WORKDIR
-$CMD swash_mpi.exe INPUT
+$CMD ../swash_mpi.exe INPUT
 
