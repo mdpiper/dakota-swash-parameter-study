@@ -60,6 +60,7 @@ if __name__ == '__main__':
     input_file = 'INPUT'
     output_file = 'bot07.mat'
     output_file_var = 'Botlev'
+    run_script = 'run_swash.sh'
 
     # Use the parsing utility `dprepro` (from $DAKOTA_DIR/bin) to
     # incorporate the parameters from Dakota into the SWASH input
@@ -67,8 +68,9 @@ if __name__ == '__main__':
     shutil.copy(os.path.join(start_dir, input_template), os.curdir)
     call(['dprepro', sys.argv[1], input_template, input_file])
 
-    # Call SWASH with the new input file.
-    call(['swash_mpi.exe', input_file])
+    # Call SWASH with a script containing PBS commands.
+    job_name = 'SWASH-Dakota' + os.path.splitext(os.getcwd())[1]
+    call(['qsub', '-N', job_name, run_script])
 
     # Calculate the mean and standard deviation of the 'Botlev' output
     # values for the simulation. Write the output to a Dakota results
