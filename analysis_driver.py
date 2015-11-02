@@ -52,7 +52,7 @@ def get_labels(params_file):
         return(labels)
 
 
-def main():
+if __name__ == '__main__':
 
     # Files and directories.
     start_dir = os.path.dirname(os.path.realpath(__file__))
@@ -64,6 +64,7 @@ def main():
     # Use the parsing utility `dprepro` (from $DAKOTA_DIR/bin) to
     # incorporate the parameters from Dakota into the SWASH input
     # template, creating a new SWASH input file.
+    shutil.copy(os.path.join(start_dir, input_template), os.curdir)
     call(['dprepro', sys.argv[1], input_template, input_file])
 
     # Call SWASH with the new input file.
@@ -79,7 +80,3 @@ def main():
     else:
         m_series = [0, 0]
     write(sys.argv[2], m_series, labels)
-
-
-if __name__ == '__main__':
-    main()
