@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     # Call SWASH with a script containing PBS commands.
     job_name = 'SWASH-Dakota' + os.path.splitext(os.getcwd())[1]
-    call(['qsub', '-N', job_name, run_script])
+    call(['qsub', '-N', job_name, os.path.join(start_dir, run_script)])
 
     # Calculate the mean and standard deviation of the 'Botlev' output
     # values for the simulation. Write the output to a Dakota results
