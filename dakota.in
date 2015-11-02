@@ -20,7 +20,7 @@ variables
 
 interface
   fork
-  analysis_driver = 'run_swash.py' # must be executable
+  analysis_driver = 'analysis_driver.py' # must be executable
   parameters_file = 'params.in'
   results_file    = 'results.out'
   work_directory 
