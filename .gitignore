@@ -1,2 +1,8 @@
 # Emacs
 *~
+
+# Dakota outputs
+run.*
+dakota.dat
+dakota.out
+dakota.rst
