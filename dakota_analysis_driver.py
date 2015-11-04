@@ -14,13 +14,13 @@ import numpy as np
 
 
 def read(output_file, variable=None):
-    """Read data from a MATfile. Returns a numpy array, or None on an error."""
+    """Read data from a MATfile. Return a numpy array."""
     from scipy.io import loadmat
     try:
         mat = loadmat(output_file)
         var = mat[variable]
-    except IOError:
-        return None
+    except:
+        raise
     else:
         return(var)
 
@@ -52,37 +52,25 @@ def get_labels(params_file):
         return(labels)
 
 
-if __name__ == '__main__':
+def driver():
+    """Broker communication between Dakota and SWASH through files."""
 
     # Files and directories.
     start_dir = os.path.dirname(os.path.realpath(__file__))
-    input_template = 'INPUT.template'
-    input_file = 'INPUT'
     output_file = 'bot07.mat'
     output_file_var = 'Botlev'
-    data_file = 'sand.bot'
-    run_script = 'run_swash.sh'
-
-    # Use the parsing utility `dprepro` (from $DAKOTA_DIR/bin) to
-    # incorporate the parameters from Dakota into the SWASH input
-    # template, creating a new SWASH input file.
-    shutil.copy(os.path.join(start_dir, input_template), os.curdir)
-    call(['dprepro', sys.argv[1], input_template, input_file])
-
-    # Copy data file into active directory.
-    shutil.copy(os.path.join(start_dir, data_file), os.curdir)
-
-    # Call SWASH with a script containing PBS commands.
-    job_name = 'SWASH-Dakota' + os.path.splitext(os.getcwd())[1]
-    call(['qsub', '-N', job_name, os.path.join(start_dir, run_script)])
 
     # Calculate the mean and standard deviation of the 'Botlev' output
     # values for the simulation. Write the output to a Dakota results
     # file.
     labels = get_labels(sys.argv[1])
-    series = read(output_file, output_file_var)
-    if series is not None:
-        m_series = [np.mean(series), np.std(series)]
+    output = read(output_file, output_file_var)
+    if output is not None:
+        m_output = [np.mean(output), np.std(output)]
     else:
-        m_series = [0, 0]
-    write(sys.argv[2], m_series, labels)
+        m_output = [0, 0]
+    write(sys.argv[2], m_output, labels)
+
+
+if __name__ == '__main__':
+    driver()
