@@ -3,8 +3,6 @@
 #
 #PBS -l nodes=1:ppn=8
 #PBS -l walltime=12:00:00
-#PBS -m abe
-#PBS -M mark.piper@colorado.edu
 
 ncpu=`wc -l < $PBS_NODEFILE`
 nnodes=`uniq $PBS_NODEFILE | wc -l`
