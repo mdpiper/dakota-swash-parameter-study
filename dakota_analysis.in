@@ -1,0 +1,39 @@
+# A Dakota parameter study experiment with SWASH.
+#
+# This is the second step of a two-step run, where SWASH output from
+# the first step is analyzed.
+#
+# Call with:
+#   $ dakota -i dakota_analysis.in -o dakota_analysis.out &> analysis.log
+
+environment
+  tabular_graphics_data
+    tabular_data_file = 'dakota.dat'
+
+# There are num_steps + 1 = 7 evaluations.
+method
+  vector_parameter_study
+    final_point = 5.0
+    num_steps = 6
+
+variables
+  continuous_design = 1
+    descriptors   'BOT-sand'
+    initial_point  2.0
+
+interface
+  fork
+  analysis_driver = 'dakota_analysis_driver.py' # must be executable
+  parameters_file = 'params.in'
+  results_file    = 'results.out'
+  work_directory 
+    named 'run'
+    directory_tag
+    directory_save
+  file_save
+
+responses
+  response_functions = 2
+  response_descriptors = 'Botlev-mean' 'Botlev-stdev'
+  no_gradients
+  no_hessians
