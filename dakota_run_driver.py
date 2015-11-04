@@ -17,9 +17,7 @@ def driver():
     # Files and directories.
     start_dir = os.path.dirname(os.path.realpath(__file__))
     input_file = 'INPUT'
-    input_template = input_file + '.template'    
-    output_file = 'bot07.mat'
-    output_file_var = 'Botlev'
+    input_template = input_file + '.template'
     data_file = 'sand.bot'
     run_script = 'run_swash.sh'
 
@@ -40,6 +38,7 @@ def driver():
     # Provide a dummy results file to advance Dakota.
     with open(sys.argv[2], 'w') as fp:
         fp.write('0.0\n1.0\n')
+
 
 if __name__ == '__main__':
     driver()
