@@ -23,6 +23,7 @@ variables
 
 interface
   fork
+  id_interface = '0'
   analysis_driver = 'dakota_analysis_driver.py' # must be executable
   parameters_file = 'params.in'
   results_file    = 'results.out'
@@ -34,6 +35,6 @@ interface
 
 responses
   response_functions = 2
-  response_descriptors = 'Botlev-mean' 'Botlev-stdev'
+  response_descriptors = 'Ufric_x_002800_000-mean' 'Ufric_x_002800_000-stdev'
   no_gradients
   no_hessians

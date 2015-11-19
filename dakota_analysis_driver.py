@@ -10,7 +10,6 @@ import os
 import re
 import shutil
 from subprocess import call
-import numpy as np
 
 
 def read(output_file, variable=None):
@@ -57,16 +56,16 @@ def driver():
 
     # Files and directories.
     start_dir = os.path.dirname(os.path.realpath(__file__))
-    output_file = 'bot07.mat'
-    output_file_var = 'Botlev'
+    output_file = 'ufric07.mat'
+    output_var = 'Ufric_x_002800_000' # final time step
 
     # Calculate the mean and standard deviation of the 'Botlev' output
     # values for the simulation. Write the output to a Dakota results
     # file.
     labels = get_labels(sys.argv[1])
-    output = read(output_file, output_file_var)
+    output = read(output_file, output_var)
     if output is not None:
-        m_output = [np.mean(output), np.std(output)]
+        m_output = [output.mean(), output.std()]
     else:
         m_output = [0, 0]
     write(sys.argv[2], m_output, labels)
