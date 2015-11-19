@@ -60,3 +60,18 @@ After the first stage completes, run the second stage with:
 ```
 $ dakota -i dakota_analysis.in -o dakota_analysis.out &> analysis.log
 ```
+
+## Results
+
+View the results of the study in **dakota.dat**:
+```
+$ cat dakota.dat
+%eval_id interface      BOT-sand Ufric_x_002800_000-mean Ufric_x_002800_000-stdev
+1         0              2     0.00145875      0.0223389
+2         0            2.5     0.00474198      0.0264774
+3         0              3   -0.000528284      0.0221227
+4         0            3.5     -0.0115249      0.0196799
+5         0              4     -0.0152711      0.0199635
+6         0            4.5     -0.0163003      0.0195528
+7         0              5      -0.017241      0.0196005
+```
